@@ -1,0 +1,35 @@
+@import "varibales";
+@import "mixins";
+
+.excel__header {
+  /*
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  */
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 10px;
+
+  & .input {
+    padding: 5px;
+
+    font-size: 18px;
+
+    border: 2px solid transparent;
+    border-radius: 6px;
+
+    &:hover {
+      border-color: $main-color;
+    }
+
+    &:focus,
+    &:active {
+      border-color: #1ea2ee;
+    }
+  }
+}

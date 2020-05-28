@@ -1,0 +1,33 @@
+@import "varibales";
+@import "mixins";
+
+.excel__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 10px;
+
+  border: 1px solid transparent;
+  border-top-color: $main-color;
+  border-bottom-color: $main-color;
+
+  .style__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+
+    list-style: none;
+
+    & .button {
+      & span {
+        color: #000000;
+      }
+
+      &:hover span {
+        color: #000000;
+      }
+    }
+  }
+}
