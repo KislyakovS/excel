@@ -1,0 +1,55 @@
+@import "varibales";
+@import "mixins";
+
+.excel__table {
+  max-width: 100%;
+  height: auto;
+  padding-bottom: 2px;
+
+  overflow: auto;
+
+  & .row {
+    display: flex;
+
+    & .row-info {
+      width: $width-info-cell;
+      height: $height-info-cell;
+      padding: 5px;
+
+      text-align: center;
+
+      border: 1px solid transparent;
+      border-bottom-color: $main-color;
+      border-right-color: $main-color;
+    }
+
+    & .row-info,
+    & .column {
+      background-color: #eeeeee;
+    }
+
+    & .columns,
+    & .cells {
+      display: flex;
+    }
+
+    & .cell,
+    & .column {
+      width: $width-cell;
+      height: $height-info-cell;
+      padding: 5px;
+
+      border: 1px solid transparent;
+      border-bottom-color: $main-color;
+      border-right-color: $main-color;
+    }
+
+    & .cell.selected {
+      outline: 2px solid #1ea2ee;
+    }
+
+    & .column {
+      text-align: center;
+    }
+  }
+}

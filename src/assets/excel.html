@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <title>Excel</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="excel">
+        <header class="excel__header">
+          <input type="text" class="input" placeholder="Название таблицы" />
+          <div>
+            <button class="button">
+              <span class="material-icons">
+                delete
+              </span>
+            </button>
+            <button class="button">
+              <span class="material-icons">
+                exit_to_app
+              </span>
+            </button>
+          </div>
+        </header>
+
+        <div class="excel__toolbar">
+          <ul class="style__list">
+            <li>
+              <button class="button">
+                <span class="material-icons">
+                  format_align_left
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="button">
+                <span class="material-icons">
+                  format_align_center
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="button">
+                <span class="material-icons">
+                  format_align_right
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="button">
+                <span class="material-icons">
+                  format_bold
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="button">
+                <span class="material-icons">
+                  format_italic
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="button">
+                <span class="material-icons">
+                  format_underlined
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="excel__formula">
+          <div class="info">fx</div>
+          <div class="input" contenteditable spellcheck="false"></div>
+        </div>
+
+        <div class="excel__table">
+          <div class="row">
+            <div class="row-info"></div>
+            <div class="columns">
+              <div class="column">A</div>
+              <div class="column">B</div>
+              <div class="column">C</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              1
+            </div>
+            <div class="cells">
+              <div class="cell selected">A1</div>
+              <div class="cell">B1</div>
+              <div class="cell">C1</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-info">
+              2
+            </div>
+            <div class="cells">
+              <div class="cell">A2</div>
+              <div class="cell">B2</div>
+              <div class="cell">C3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
