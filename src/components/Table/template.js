@@ -1,11 +1,24 @@
-const templateCell = () => `<div class="cell" contenteditable></div>`;
+const templateCell = (_, index) =>
+  `<div class="cell" contenteditable data-col="${index}"></div>`;
 
-const templateColumn = (content = "") => `<div class="column">${content}</div>`;
+const templateColumn = (
+  content = "",
+  index
+) => `<div class="column" data-type="resizabel" data-index="${index}">
+  ${content}
+  <div class="col-resize" data-resize="col"></div>
+</div>`;
 
 const templateRow = (content = "", number = "") => {
+  const resize = number
+    ? '<div class="row-resize" data-resize="row"></div>'
+    : "";
   return `
-  <div class="row">
-    <div class="row__info">${number}</div>
+  <div class="row" data-type="resizabel">
+    <div class="row__info">
+      ${number}
+      ${resize}
+    </div>
     <div class="row__data">${content}</div>
   </div>`;
 };
@@ -23,7 +36,7 @@ export const createTable = (counterRows = 10) => {
 
   const columns = new Array(counterChar)
     .fill("")
-    .map((_, i) => templateColumn(toChar(CODES.A + i)))
+    .map((_, i) => templateColumn(toChar(CODES.A + i), i))
     .join("");
 
   rows.push(templateRow(columns));
