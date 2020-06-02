@@ -32,12 +32,30 @@ class Dom {
     this.$el.removeEventListener(eventType, cb);
   }
 
+  closest(selector) {
+    return $(this.el.closest(selector));
+  }
+
+  getCords() {
+    return this.el.getBoundingClientRect();
+  }
+
+  style(params, value) {
+    this.el.style[params] = value;
+  }
+
+  findAll(selector) {
+    return this.el.querySelectorAll(selector);
+  }
+
+  get dataset() {
+    return this.el.dataset;
+  }
+
   get el() {
     return this.$el;
   }
 }
-
-//export default () => new Dom();
 
 const $ = (selector) => new Dom(selector);
 
