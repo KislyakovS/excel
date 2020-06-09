@@ -1,16 +1,20 @@
 import DomListener from "@core/DomListener";
 
 export default class ExcelComponent extends DomListener {
-  constructor($root, { listeners = [] }) {
+  constructor($root, {listeners = [], emitter}) {
     super($root, listeners);
+
+    this.emitter = emitter
 
     this.prepare();
   }
 
-  prepare() {}
+  prepare() {
+  }
 
   // Вывод шаблон компонента
-  toHTML() {}
+  toHTML() {
+  }
 
   init() {
     this.bindDomEvents();

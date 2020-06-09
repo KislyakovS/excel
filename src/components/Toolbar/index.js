@@ -1,9 +1,10 @@
 import ExcelComponent from "@core/ExcelComponent";
 
 export default class Toolbar extends ExcelComponent {
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
       listeners: [],
+      ...options
     });
 
     this.$root = $root;

@@ -6,8 +6,7 @@ const templateCell = (_, index) =>
 const templateCell = (row) => (_, index) =>
   `<div class="cell" contenteditable data-col="${index}" data-type="cell" data-id="${row}:${index}"></div>`;
 
-const templateColumn = (
-  content = "",
+const templateColumn = (content = "",
   index
 ) => `<div class="column" data-type="resizabel" data-index="${index}">
   ${content}

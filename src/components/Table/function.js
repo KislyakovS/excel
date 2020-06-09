@@ -1,4 +1,4 @@
-import { range } from "@core/utils";
+import {range} from "@core/utils";
 
 export const matrix = ($cell, $currentSelection, $root) => {
   const [startRow, startColum] = $cell.id(":");
@@ -19,3 +19,24 @@ export const matrix = ($cell, $currentSelection, $root) => {
 
   //this.selection.setGroupSelection($els);
 };
+
+export const nextSlector = (key, [row, col]) => {
+  switch (key) {
+    case "Enter":
+    case "ArrowDown":
+      row++
+      break;
+    case "Tab":
+    case "ArrowRight":
+      col++
+      break;
+    case "ArrowLeft":
+      col = col == 0 ? col : col - 1
+      break;
+    case "ArrowUp":
+      row = row == 1 ? row : row - 1
+      break
+  }
+
+  return `[data-id="${row}:${col}"]`
+}

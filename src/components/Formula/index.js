@@ -1,9 +1,10 @@
 import ExcelComponent from "@core/ExcelComponent";
 
 export default class Formula extends ExcelComponent {
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
-      listeners: ["input", "click"],
+      listeners: ["input"],
+      ...options
     });
 
     this.$root = $root;
@@ -19,10 +20,6 @@ export default class Formula extends ExcelComponent {
   }
 
   onInput(e) {
-    console.log(`input fromula ${e.target.textContent}`);
-  }
-
-  onClick(e) {
-    console.log("Click formula element");
+    this.emitter.emit("form:input", e.target.textContent)
   }
 }

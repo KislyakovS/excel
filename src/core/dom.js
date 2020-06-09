@@ -20,6 +20,10 @@ class Dom {
     this.html("");
   }
 
+  text(value) {
+    this.el.textContent = value
+  }
+
   append(node) {
     this.$el.append(node);
   }
@@ -58,6 +62,10 @@ class Dom {
 
   removeClass(classes) {
     this.el.classList.remove(classes);
+  }
+
+  focus() {
+    this.el.focus()
   }
 
   id(parce) {

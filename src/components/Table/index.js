@@ -1,15 +1,24 @@
 import ExcelComponent from "@core/ExcelComponent";
-import { createTable } from "@/components/Table/template";
-import { onResize } from "@/components/Table/resize";
+import {createTable} from "@/components/Table/template";
+import {onResize} from "@/components/Table/resize";
 import Selection from "@/components/Table/selection";
-import { matrix } from "@/components/Table/function";
+import {matrix, nextSlector} from "@/components/Table/function";
 import $ from "@core/dom";
 
+const KEYS = [
+  "Enter",
+  "Tab",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowDown",
+  "ArrowUp"
+]
 
 export default class Table extends ExcelComponent {
-  constructor($root) {
+  constructor($root, options) {
     super($root, {
-      listeners: ["mousedown", "click"],
+      listeners: ["mousedown", "click", "keydown"],
+      ...options
     });
 
     this.$root = $root;
@@ -26,6 +35,10 @@ export default class Table extends ExcelComponent {
 
     const $cell = this.$root.find('[data-id="1:0"]');
     this.selection.setOneSelection($cell);
+
+    this.emitter.subscribe("form:input", (text) => {
+      this.selection.current.text(text)
+    })
   }
 
   toHTML() {
@@ -33,7 +46,7 @@ export default class Table extends ExcelComponent {
   }
 
   onMousedown(e) {
-    const { resize } = e.target.dataset;
+    const {resize} = e.target.dataset;
 
     if (resize) {
       onResize(this.$root, e);
@@ -41,8 +54,8 @@ export default class Table extends ExcelComponent {
   }
 
   onClick(e) {
-    const { type } = e.target.dataset;
-    const { shiftKey } = e;
+    const {type} = e.target.dataset;
+    const {shiftKey} = e;
 
     if (type === "cell") {
       const $cell = $(e.target);
@@ -55,6 +68,18 @@ export default class Table extends ExcelComponent {
       } else {
         this.selection.setOneSelection($cell);
       }
+    }
+  }
+
+  onKeydown(e) {
+    const {key} = e;
+
+    if (KEYS.includes(key) && !e.shiftKey) {
+      e.preventDefault()
+
+      const id = this.selection.current.id(":")
+      const $newCell = this.$root.find(nextSlector(key, id))
+      this.selection.setOneSelection($newCell)
     }
   }
 }

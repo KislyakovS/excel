@@ -8,6 +8,7 @@ export default class Selection {
 
   setSelection($el) {
     this.group.add($el);
+    $el.focus();
     $el.addClass(Selection.CLASS_NAME);
   }
 
