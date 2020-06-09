@@ -48,6 +48,28 @@ class Dom {
     return this.el.querySelectorAll(selector);
   }
 
+  find(selector) {
+    return $(this.el.querySelector(selector));
+  }
+
+  addClass(classes) {
+    this.el.classList.add(classes);
+  }
+
+  removeClass(classes) {
+    this.el.classList.remove(classes);
+  }
+
+  id(parce) {
+    if (parce) {
+      const id = this.id();
+
+      return id.split(parce);
+    }
+
+    return this.el.dataset.id;
+  }
+
   get dataset() {
     return this.el.dataset;
   }
