@@ -21,7 +21,12 @@ class Dom {
   }
 
   text(value) {
-    this.el.textContent = value
+    if (typeof value === "string") {
+      this.el.textContent = value
+      return this
+    }
+
+    return this.el.textContent
   }
 
   append(node) {
@@ -84,6 +89,10 @@ class Dom {
 
   get el() {
     return this.$el;
+  }
+
+  focus() {
+    this.$el.focus()
   }
 }
 

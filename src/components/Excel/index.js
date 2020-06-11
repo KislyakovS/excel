@@ -36,4 +36,8 @@ export default class Excel {
 
     this.components.forEach((component) => component.init());
   }
+
+  remove() {
+    this.components.forEach((component) => component.remove())
+  }
 }

@@ -17,7 +17,7 @@ const KEYS = [
 export default class Table extends ExcelComponent {
   constructor($root, options) {
     super($root, {
-      listeners: ["mousedown", "click", "keydown"],
+      listeners: ["mousedown", "click", "keydown", "input"],
       ...options
     });
 
@@ -36,8 +36,14 @@ export default class Table extends ExcelComponent {
     const $cell = this.$root.find('[data-id="1:0"]');
     this.selection.setOneSelection($cell);
 
-    this.emitter.subscribe("form:input", (text) => {
+    this.emitInput($cell.text())
+
+    this.$on("formula:input", (text) => {
       this.selection.current.text(text)
+    })
+
+    this.$on("formula:keyEnter", () => {
+      this.selection.current.focus()
     })
   }
 
@@ -80,6 +86,19 @@ export default class Table extends ExcelComponent {
       const id = this.selection.current.id(":")
       const $newCell = this.$root.find(nextSlector(key, id))
       this.selection.setOneSelection($newCell)
+
+      this.emitInput($newCell.text())
     }
   }
+
+  onInput(e) {
+    const value = e.target.textContent
+
+    this.emitInput(value)
+  }
+
+  emitInput(value) {
+    this.$emit("table:input", value)
+  }
+
 }
