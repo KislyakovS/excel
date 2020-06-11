@@ -20,6 +20,15 @@ class Dom {
     this.html("");
   }
 
+  text(value) {
+    if (typeof value === "string") {
+      this.el.textContent = value
+      return this
+    }
+
+    return this.el.textContent
+  }
+
   append(node) {
     this.$el.append(node);
   }
@@ -48,12 +57,42 @@ class Dom {
     return this.el.querySelectorAll(selector);
   }
 
+  find(selector) {
+    return $(this.el.querySelector(selector));
+  }
+
+  addClass(classes) {
+    this.el.classList.add(classes);
+  }
+
+  removeClass(classes) {
+    this.el.classList.remove(classes);
+  }
+
+  focus() {
+    this.el.focus()
+  }
+
+  id(parce) {
+    if (parce) {
+      const id = this.id();
+
+      return id.split(parce);
+    }
+
+    return this.el.dataset.id;
+  }
+
   get dataset() {
     return this.el.dataset;
   }
 
   get el() {
     return this.$el;
+  }
+
+  focus() {
+    this.$el.focus()
   }
 }
 

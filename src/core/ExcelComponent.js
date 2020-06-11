@@ -1,12 +1,30 @@
 import DomListener from "@core/DomListener";
 
 export default class ExcelComponent extends DomListener {
-  constructor($root, { listeners = [] }) {
+  constructor($root, {listeners = [], emitter}) {
     super($root, listeners);
+
+    this.emitter = emitter
+
+    this.unsubscribers = []
+
+    this.prepare();
   }
 
-  // Вывод шаблон компонента
-  toHTML() {}
+  prepare() {
+  }
+
+  toHTML() {
+  }
+
+  $emit(eventName, ...arg) {
+    this.emitter.emit(eventName, ...arg)
+  }
+
+  $on(eventName, fn) {
+    const unsub = this.emitter.subscribe(eventName, fn)
+    this.unsubscribers.push(unsub)
+  }
 
   init() {
     this.bindDomEvents();
@@ -14,5 +32,7 @@ export default class ExcelComponent extends DomListener {
 
   remove() {
     this.removeDomEvents();
+
+    this.unsubscribers.forEach(fn => fn())
   }
 }
