@@ -74,6 +74,8 @@ export default class Table extends ExcelComponent {
       } else {
         this.selection.setOneSelection($cell);
       }
+
+      this.emitInput($cell.text())
     }
   }
 
