@@ -3,6 +3,7 @@ import {createTable} from "@/components/Table/template";
 import {onResize} from "@/components/Table/resize";
 import Selection from "@/components/Table/selection";
 import {matrix, nextSlector} from "@/components/Table/function";
+import * as actions from "@/redux/actions"
 import $ from "@core/dom";
 
 const KEYS = [
@@ -45,17 +46,31 @@ export default class Table extends ExcelComponent {
     this.$on("formula:keyEnter", () => {
       this.selection.current.focus()
     })
+
+    this.$subscribe((state) => {
+      console.log("Sate: ", state)
+    })
   }
 
   toHTML() {
     return createTable(20);
   }
 
+  async resizeTable(e) {
+    try {
+      const data = await onResize(this.$root, e)
+      this.$dispatch(actions.resizeTable(data))
+    } catch (e) {
+      console.error("Error resize table ", e.message)
+    }
+  }
+
   onMousedown(e) {
     const {resize} = e.target.dataset;
 
     if (resize) {
-      onResize(this.$root, e);
+      //onResize(this.$root, e);
+      this.resizeTable(e)
     }
   }
 
@@ -77,6 +92,7 @@ export default class Table extends ExcelComponent {
 
       this.emitInput($cell.text())
     }
+
   }
 
   onKeydown(e) {
@@ -102,5 +118,4 @@ export default class Table extends ExcelComponent {
   emitInput(value) {
     this.$emit("table:input", value)
   }
-
 }

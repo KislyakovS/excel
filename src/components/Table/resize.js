@@ -1,21 +1,24 @@
 import $ from "@core/dom";
 
-export const onResize = ($root, e) => {
-  const { resize } = e.target.dataset;
+export const onResize = ($root, e) => new Promise((resolve => {
+  const {resize} = e.target.dataset;
 
   const $resizer = $(e.target);
   const $parent = $resizer.closest('[data-type="resizabel"]');
-  const { width, height } = $parent.getCords();
+  const {width, height} = $parent.getCords();
 
-  const { index } = $parent.dataset;
+  const {index} = $parent.dataset;
   const $columnAll = $root.findAll(`[data-col="${index}"]`);
+
+
+  let valueResize;
 
   $resizer.style("opacity", "1");
 
-  const { right, bottom } = $resizer.getCords();
+  const {right, bottom} = $resizer.getCords();
 
   document.onmousemove = (event) => {
-    const { pageX, pageY } = event;
+    const {pageX, pageY} = event;
     if (resize === "col") {
       const delta = pageX - right;
       $resizer.style("right", `${-delta}px`);
@@ -29,24 +32,28 @@ export const onResize = ($root, e) => {
     document.onmouseup = null;
     document.onmousemove = null;
 
-    const { pageX, pageY } = event;
+    const {pageX, pageY} = event;
 
     $resizer.style("opacity", "0");
 
     if (resize === "col") {
-      const value = getResizeSide(pageX, right, width);
-      $columnAll.forEach((el) => (el.style.width = value));
-      $parent.style("width", value);
+      valueResize = getResizeSide(pageX, right, width);
+      $columnAll.forEach((el) => (el.style.width = valueResize));
+      $parent.style("width", valueResize);
 
       $resizer.style("right", "0");
     } else if (resize === "row") {
-      const value = getResizeSide(pageY, bottom, height);
-      $parent.style("height", value);
+      valueResize = getResizeSide(pageY, bottom, height);
+      $parent.style("height", valueResize);
 
       $resizer.style("bottom", "0");
     }
+
+    resolve({
+      [resize === "col" ? index : null]: valueResize
+    })
   };
-};
+}))
 
 const getResizeSide = (cord, position, side) => {
   const delta = cord - position;

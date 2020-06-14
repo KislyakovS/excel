@@ -3,10 +3,11 @@ import Emitter from "@core/Emitter";
 
 export default class Excel {
   constructor(selector, options) {
-    const {components = []} = options;
+    const {components = [], store} = options;
 
     this.$el = document.querySelector(selector);
     this.components = components;
+    this.store = store
 
     this.emitter = new Emitter()
   }
@@ -15,7 +16,8 @@ export default class Excel {
     const $root = $.create("div", "excel");
 
     const componentOptions = {
-      emitter: this.emitter
+      emitter: this.emitter,
+      store: this.store
     }
 
     this.components = this.components.map((Component) => {

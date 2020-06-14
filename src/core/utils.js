@@ -7,3 +7,11 @@ export const range = (start, end) => {
 
   return new Array(end - start + 1).fill("").map((_, i) => i + start);
 };
+
+export const storage = (key, data = null) => {
+  if (data) {
+    localStorage.setItem(key, JSON.stringify(data))
+  } else {
+    return localStorage.getItem(key)
+  }
+}
