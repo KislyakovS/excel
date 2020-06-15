@@ -50,7 +50,8 @@ export const onResize = ($root, e) => new Promise((resolve => {
     }
 
     resolve({
-      [resize === "col" ? index : null]: valueResize
+      value: {[index]: valueResize},
+      type: resize
     })
   };
 }))

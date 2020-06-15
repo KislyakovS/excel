@@ -12,6 +12,6 @@ export const storage = (key, data = null) => {
   if (data) {
     localStorage.setItem(key, JSON.stringify(data))
   } else {
-    return localStorage.getItem(key)
+    return JSON.parse(localStorage.getItem(key))
   }
 }
