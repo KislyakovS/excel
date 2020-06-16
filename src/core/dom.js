@@ -20,13 +20,20 @@ class Dom {
     this.html("");
   }
 
-  text(value) {
-    if (typeof value === "string") {
-      this.el.textContent = value
-      return this
+  text(value = null) {
+    if (this.el.tagName === "INPUT") {
+      if (value !== null) {
+        this.el.value = value
+      } else {
+        return this.el.value
+      }
+    } else {
+      if (value !== null) {
+        this.el.textContent = value
+      } else {
+        return this.el.textContent
+      }
     }
-
-    return this.el.textContent
   }
 
   append(node) {
@@ -93,10 +100,6 @@ class Dom {
 
   get el() {
     return this.$el;
-  }
-
-  focus() {
-    this.$el.focus()
   }
 }
 

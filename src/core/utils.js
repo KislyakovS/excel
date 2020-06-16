@@ -15,3 +15,5 @@ export const storage = (key, data = null) => {
     return JSON.parse(localStorage.getItem(key))
   }
 }
+
+export const setTitlePage = (title) => document.title = title

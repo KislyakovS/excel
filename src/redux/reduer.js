@@ -1,4 +1,4 @@
-import {TABLE_RESIZE, TABLE_SELECTED} from "@/redux/types"
+import {HEADER_TITLE, TABLE_RESIZE, TABLE_SELECTED} from "@/redux/types"
 
 export const reducer = (state, action) => {
   let {type, data} = action
@@ -22,6 +22,10 @@ export const reducer = (state, action) => {
 
       return {...state, selected: id}
       break;
+    case HEADER_TITLE:
+      const {title} = data
+
+      return {...state, title}
     default:
       return state
   }

@@ -5,6 +5,7 @@ export const onResize = ($root, e) => new Promise((resolve => {
 
   const $resizer = $(e.target);
   const $parent = $resizer.closest('[data-type="resizabel"]');
+  const $rowInfo = $parent.find(".row__info")
   const {width, height} = $parent.getCords();
 
   const {index} = $parent.dataset;
@@ -14,6 +15,12 @@ export const onResize = ($root, e) => new Promise((resolve => {
   let valueResize;
 
   $resizer.style("opacity", "1");
+  if (resize === "row") {
+    $resizer.style("width", "100vw")
+    $rowInfo.style("z-index", "9999")
+  } else {
+    $resizer.style("height", "100vh")
+  }
 
   const {right, bottom} = $resizer.getCords();
 
