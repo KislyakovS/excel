@@ -50,7 +50,7 @@ class Dom {
   }
 
   style(params, value = null) {
-    if (value === null) {
+    if (value !== null) {
       this.el.style[params] = value;
     }
 
