@@ -16,8 +16,6 @@ export const matrix = ($cell, $currentSelection, $root) => {
   const $els = ids.map((id) => $root.find(`[data-id="${id}"]`));
 
   return $els;
-
-  //this.selection.setGroupSelection($els);
 };
 
 export const nextSlector = (key, [row, col]) => {

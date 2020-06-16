@@ -15,12 +15,16 @@ const KEYS = [
   "ArrowUp"
 ]
 
+const DEFAULT_SELECTED = "1:0"
+
 export default class Table extends ExcelComponent {
   constructor($root, options) {
     super($root, {
-      listeners: ["mousedown", "click", "keydown", "input"],
+      listeners: ["mousedown", "keydown", "input"],
       ...options
     });
+
+    this.fullStore = this.store.getState()
 
     this.$root = $root;
   }
@@ -34,7 +38,9 @@ export default class Table extends ExcelComponent {
   init() {
     super.init();
 
-    const $cell = this.$root.find('[data-id="1:0"]');
+    const {selected = DEFAULT_SELECTED} = this.fullStore
+
+    const $cell = this.$root.find(`[data-id="${selected}"]`);
     this.selection.setOneSelection($cell);
 
     this.emitInput($cell.text())
@@ -47,13 +53,15 @@ export default class Table extends ExcelComponent {
       this.selection.current.focus()
     })
 
+    /*
     this.$subscribe((state) => {
       console.log("Sate: ", state)
     })
+    */
   }
 
   toHTML() {
-    return createTable(20, this.store.getState());
+    return createTable(20, this.fullStore);
   }
 
   async resizeTable(e) {
@@ -65,34 +73,36 @@ export default class Table extends ExcelComponent {
     }
   }
 
-  onMousedown(e) {
-    const {resize} = e.target.dataset;
+  selectedTable(e) {
+    const {shiftKey} = e;
+    const $cell = $(e.target);
 
-    if (resize) {
-      //onResize(this.$root, e);
-      this.resizeTable(e)
+    if (shiftKey) {
+      const $currentSelection = this.selection.current;
+      const $els = matrix($cell, $currentSelection, this.$root);
+
+      this.selection.setGroupSelection($els);
+    } else {
+      //console.log(this.selection.current.dataset.id)
+      this.selection.setOneSelection($cell);
+
+      const {id} = $cell.dataset
+      this.$dispatch(actions.selectedTable({id}))
     }
+
+    this.emitInput($cell.text())
   }
 
-  onClick(e) {
-    const {type} = e.target.dataset;
-    const {shiftKey} = e;
+  onMousedown(e) {
+    const {resize, type} = e.target.dataset;
 
-    if (type === "cell") {
-      const $cell = $(e.target);
-
-      if (shiftKey) {
-        const $currentSelection = this.selection.current;
-        const $els = matrix($cell, $currentSelection, this.$root);
-
-        this.selection.setGroupSelection($els);
-      } else {
-        this.selection.setOneSelection($cell);
-      }
-
-      this.emitInput($cell.text())
+    if (resize) {
+      this.resizeTable(e)
     }
 
+    if (type === "cell") {
+      this.selectedTable(e)
+    }
   }
 
   onKeydown(e) {

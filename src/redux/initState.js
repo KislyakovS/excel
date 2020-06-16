@@ -2,7 +2,7 @@ import {storage} from "@core/utils";
 
 const defaultState = {
   colSize: {},
-  rowSize: {}
+  rowSize: {},
 }
 
 export const initState = storage("state") ? storage("state") : defaultState

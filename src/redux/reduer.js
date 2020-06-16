@@ -1,21 +1,26 @@
-import {TABLE_RESIZE} from "@/redux/types"
+import {TABLE_RESIZE, TABLE_SELECTED} from "@/redux/types"
 
 export const reducer = (state, action) => {
-  let {type} = action
-
-  console.log(type)
+  let {type, data} = action
 
   switch (type) {
     case TABLE_RESIZE:
-      const {type: typeResize, value} = action.data
+      const {type: typeResize, value} = data
 
       if (typeResize === "col") {
         const newColSize = {...state.colSize, ...value}
         return {...state, colSize: {...newColSize}}
-      } else {
+      } else if (typeResize === "row") {
         const newRowSize = {...state.rowSize, ...value}
         return {...state, rowSize: {...newRowSize}}
+      } else {
+        return state
       }
+      break;
+    case TABLE_SELECTED:
+      const {id} = data
+
+      return {...state, selected: id}
       break;
     default:
       return state
