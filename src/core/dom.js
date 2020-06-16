@@ -49,8 +49,12 @@ class Dom {
     return this.el.getBoundingClientRect();
   }
 
-  style(params, value) {
-    this.el.style[params] = value;
+  style(params, value = null) {
+    if (value === null) {
+      this.el.style[params] = value;
+    }
+
+    return this.el.style[params]
   }
 
   findAll(selector) {

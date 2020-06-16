@@ -18,15 +18,15 @@ export const matrix = ($cell, $currentSelection, $root) => {
   return $els;
 };
 
-export const nextSlector = (key, [row, col]) => {
+export const nextSlector = (key, [row, col], counterRows, counterCols) => {
   switch (key) {
     case "Enter":
     case "ArrowDown":
-      row++
+      row = row == counterRows ? row : parseInt(row) + 1
       break;
     case "Tab":
     case "ArrowRight":
-      col++
+      col = col == counterCols ? col : parseInt(col) + 1
       break;
     case "ArrowLeft":
       col = col == 0 ? col : col - 1
@@ -38,3 +38,5 @@ export const nextSlector = (key, [row, col]) => {
 
   return `[data-id="${row}:${col}"]`
 }
+
+export const setWidthRows = ($rows, width) => $rows.forEach($row => $row.style.width = `${width}px`)

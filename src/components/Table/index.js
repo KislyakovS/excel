@@ -2,7 +2,7 @@ import ExcelComponent from "@core/ExcelComponent";
 import {createTable} from "@/components/Table/template";
 import {onResize} from "@/components/Table/resize";
 import Selection from "@/components/Table/selection";
-import {matrix, nextSlector} from "@/components/Table/function";
+import {matrix, nextSlector, setWidthRows} from "@/components/Table/function";
 import * as actions from "@/redux/actions"
 import $ from "@core/dom";
 
@@ -14,8 +14,9 @@ const KEYS = [
   "ArrowDown",
   "ArrowUp"
 ]
-
 const DEFAULT_SELECTED = "1:0"
+const COUNTER_ROWS = 20
+const COUNTER_COLS = 25
 
 export default class Table extends ExcelComponent {
   constructor($root, options) {
@@ -38,6 +39,11 @@ export default class Table extends ExcelComponent {
   init() {
     super.init();
 
+    const {width} = this.$root.find(".row__data").getCords()
+    const $rows = this.$root.findAll(".row")
+
+    setWidthRows($rows, width)
+
     const {selected = DEFAULT_SELECTED} = this.fullStore
 
     const $cell = this.$root.find(`[data-id="${selected}"]`);
@@ -52,16 +58,17 @@ export default class Table extends ExcelComponent {
     this.$on("formula:keyEnter", () => {
       this.selection.current.focus()
     })
-
-    /*
-    this.$subscribe((state) => {
-      console.log("Sate: ", state)
-    })
-    */
   }
 
   toHTML() {
-    return createTable(20, this.fullStore);
+    return createTable(COUNTER_ROWS, this.fullStore);
+  }
+
+  setOnSelected($cell) {
+    this.selection.setOneSelection($cell)
+
+    const {id} = $cell.dataset
+    this.$dispatch(actions.selectedTable({id}))
   }
 
   async resizeTable(e) {
@@ -83,11 +90,7 @@ export default class Table extends ExcelComponent {
 
       this.selection.setGroupSelection($els);
     } else {
-      //console.log(this.selection.current.dataset.id)
-      this.selection.setOneSelection($cell);
-
-      const {id} = $cell.dataset
-      this.$dispatch(actions.selectedTable({id}))
+      this.setOnSelected($cell)
     }
 
     this.emitInput($cell.text())
@@ -112,8 +115,8 @@ export default class Table extends ExcelComponent {
       e.preventDefault()
 
       const id = this.selection.current.id(":")
-      const $newCell = this.$root.find(nextSlector(key, id))
-      this.selection.setOneSelection($newCell)
+      const $newCell = this.$root.find(nextSlector(key, id, COUNTER_ROWS, COUNTER_COLS))
+      this.setOnSelected($newCell)
 
       this.emitInput($newCell.text())
     }
