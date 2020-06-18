@@ -1,31 +1,20 @@
-import {HEADER_TITLE, TABLE_RESIZE, TABLE_SELECTED} from "@/redux/types"
+import {ADD_STYLE_CELL, HEADER_TITLE, INPUT_CELL, TABLE_RESIZE, TABLE_SELECTED} from "@/redux/types"
+import {inputCell, resizeTable, selectedTable, titleHeader, addStyleCell} from "@/redux/function";
 
 export const reducer = (state, action) => {
   let {type, data} = action
 
   switch (type) {
     case TABLE_RESIZE:
-      const {type: typeResize, value} = data
-
-      if (typeResize === "col") {
-        const newColSize = {...state.colSize, ...value}
-        return {...state, colSize: {...newColSize}}
-      } else if (typeResize === "row") {
-        const newRowSize = {...state.rowSize, ...value}
-        return {...state, rowSize: {...newRowSize}}
-      } else {
-        return state
-      }
-      break;
+      return resizeTable(state, data)
     case TABLE_SELECTED:
-      const {id} = data
-
-      return {...state, selected: id}
-      break;
+      return selectedTable(state, data)
     case HEADER_TITLE:
-      const {title} = data
-
-      return {...state, title}
+      return titleHeader(state, data)
+    case INPUT_CELL:
+      return inputCell(state, data)
+    case ADD_STYLE_CELL:
+      return addStyleCell(state, data)
     default:
       return state
   }

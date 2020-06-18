@@ -37,6 +37,7 @@ export default class Selection {
 
   clear() {
     this.group.forEach(($cell) => $cell.removeClass(Selection.CLASS_NAME));
+    this.group.clear()
 
     if (this.current) {
       const ids = this.current.id(":")
@@ -47,5 +48,9 @@ export default class Selection {
   setGroupSelection($els) {
     this.clear();
     $els.forEach(this.setSelection.bind(this));
+  }
+
+  setStyle(style) {
+    this.group.forEach(item => item.css(style))
   }
 }

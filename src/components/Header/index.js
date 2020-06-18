@@ -18,7 +18,7 @@ export default class Header extends ExcelComponent {
 
   toHTML() {
     return `
-    <input type="text" class="input" placeholder="Название таблицы" />
+    <input type="text" class="input js-input-title" placeholder="Название таблицы" />
     <div>
       <button class="button">
         <span class="material-icons">
@@ -38,7 +38,7 @@ export default class Header extends ExcelComponent {
     super.init();
 
     const {title} = this.store.getState()
-    this.$root.find(".input").text(title)
+    this.$root.find(".js-input-title").text(title)
 
     setTitlePage(createTitleString(title))
   }

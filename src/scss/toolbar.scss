@@ -28,6 +28,10 @@
       &:hover span {
         color: #000000;
       }
+
+      &.active span {
+        color: #0da95f;
+      }
     }
   }
 }

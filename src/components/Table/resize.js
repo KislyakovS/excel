@@ -19,7 +19,7 @@ export const onResize = ($root, e) => new Promise((resolve => {
     $resizer.style("width", "100vw")
     $rowInfo.style("z-index", "9999")
   } else {
-    $resizer.style("height", "100vh")
+    $resizer.style("height", "calc(100vh - 57px - 59px - 31px - 24px)")
   }
 
   const {right, bottom} = $resizer.getCords();
@@ -47,14 +47,18 @@ export const onResize = ($root, e) => new Promise((resolve => {
       valueResize = getResizeSide(pageX, right, width);
       $columnAll.forEach((el) => (el.style.width = valueResize));
       $parent.style("width", valueResize);
+      $resizer.style("height", "auto")
 
       $resizer.style("right", "0");
     } else if (resize === "row") {
       valueResize = getResizeSide(pageY, bottom, height);
       $parent.style("height", valueResize);
+      $resizer.style("width", "auto")
 
       $resizer.style("bottom", "0");
     }
+
+    $rowInfo.style("z-index", "99")
 
     resolve({
       value: {[index]: valueResize},

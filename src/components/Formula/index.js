@@ -1,9 +1,11 @@
 import ExcelComponent from "@core/ExcelComponent";
+import * as actions from "@/redux/actions"
 
 export default class Formula extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       listeners: ["input", "keydown"],
+      listSubscribe: ["currentText"],
       ...options
     });
 
@@ -19,16 +21,18 @@ export default class Formula extends ExcelComponent {
     `;
   }
 
+  changeSubscribe({currentText}) {
+    this.$input.text(currentText)
+  }
+
   init() {
     super.init();
 
-    const $input = this.$root.find(".js-input-formula")
-
-    this.$on("table:input", (value) => $input.text(value))
+    this.$input = this.$root.find(".js-input-formula")
   }
 
   onInput(e) {
-    this.$emit("formula:input", e.target.textContent)
+    this.$dispatch(actions.inputCell({text: e.target.textContent}))
   }
 
   onKeydown(e) {

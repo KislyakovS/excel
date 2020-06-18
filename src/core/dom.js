@@ -64,6 +64,21 @@ class Dom {
     return this.el.style[params]
   }
 
+  css(style) {
+    //this.el.
+    Object.entries(style).forEach(value => this.el.style[value[0]] = value[1])
+  }
+
+  getCss(styles) {
+    const style = {}
+
+    styles.forEach(item => {
+      style[item] = this.el.style[item]
+    })
+
+    return style
+  }
+
   findAll(selector) {
     return this.el.querySelectorAll(selector);
   }

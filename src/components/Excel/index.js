@@ -1,5 +1,6 @@
 import $ from "@core/dom";
 import Emitter from "@core/Emitter";
+import StoreSubscribe from "@core/StoreSubscribe";
 
 export default class Excel {
   constructor(selector, options) {
@@ -9,6 +10,7 @@ export default class Excel {
     this.components = components;
     this.store = store
 
+    this.storeSubscribe = new StoreSubscribe(this.store)
     this.emitter = new Emitter()
   }
 
@@ -36,10 +38,12 @@ export default class Excel {
   render() {
     this.$el.append(this.getRoot());
 
+    this.storeSubscribe.subscribeComponents(this.components)
     this.components.forEach((component) => component.init());
   }
 
   remove() {
+    this.storeSubscribe.unsubscribeFromState()
     this.components.forEach((component) => component.remove())
   }
 }
