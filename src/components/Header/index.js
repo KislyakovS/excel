@@ -1,9 +1,13 @@
 import ExcelComponent from "@core/ExcelComponent";
+import * as actions from "../../redux/actions"
+import $ from "@core/dom"
+import {setTitlePage} from "@core/utils";
+import {createTitleString} from "@/components/Header/function";
 
 export default class Header extends ExcelComponent {
   constructor($root, options) {
     super($root, {
-      listeners: [],
+      listeners: ["input"],
       ...options
     });
 
@@ -14,7 +18,7 @@ export default class Header extends ExcelComponent {
 
   toHTML() {
     return `
-    <input type="text" class="input" placeholder="Название таблицы" />
+    <input type="text" class="input js-input-title" placeholder="Название таблицы" />
     <div>
       <button class="button">
         <span class="material-icons">
@@ -28,5 +32,23 @@ export default class Header extends ExcelComponent {
       </button>
     </div>
     `;
+  }
+
+  init() {
+    super.init();
+
+    const {title} = this.store.getState()
+    this.$root.find(".js-input-title").text(title)
+
+    setTitlePage(createTitleString(title))
+  }
+
+  onInput(e) {
+    const $target = $(e.target)
+    const title = $target.text()
+
+    setTitlePage(createTitleString(title))
+
+    this.$dispatch(actions.inputHeader({title}))
   }
 }

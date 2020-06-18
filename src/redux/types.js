@@ -1,0 +1,5 @@
+export const TABLE_RESIZE = "TABLE_RESIZE"
+export const TABLE_SELECTED = "TABLE_SELECTED"
+export const HEADER_TITLE = "HEADER_TITLE"
+export const INPUT_CELL = "INPUT_CELL"
+export const ADD_STYLE_CELL = "ADD_STYLE_CELL"

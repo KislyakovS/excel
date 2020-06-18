@@ -20,13 +20,20 @@ class Dom {
     this.html("");
   }
 
-  text(value) {
-    if (typeof value === "string") {
-      this.el.textContent = value
-      return this
+  text(value = null) {
+    if (this.el.tagName === "INPUT") {
+      if (value !== null) {
+        this.el.value = value
+      } else {
+        return this.el.value
+      }
+    } else {
+      if (value !== null) {
+        this.el.textContent = value
+      } else {
+        return this.el.textContent
+      }
     }
-
-    return this.el.textContent
   }
 
   append(node) {
@@ -49,8 +56,27 @@ class Dom {
     return this.el.getBoundingClientRect();
   }
 
-  style(params, value) {
-    this.el.style[params] = value;
+  style(params, value = null) {
+    if (value !== null) {
+      this.el.style[params] = value;
+    }
+
+    return this.el.style[params]
+  }
+
+  css(style) {
+    //this.el.
+    Object.entries(style).forEach(value => this.el.style[value[0]] = value[1])
+  }
+
+  getCss(styles) {
+    const style = {}
+
+    styles.forEach(item => {
+      style[item] = this.el.style[item]
+    })
+
+    return style
   }
 
   findAll(selector) {
@@ -89,10 +115,6 @@ class Dom {
 
   get el() {
     return this.$el;
-  }
-
-  focus() {
-    this.$el.focus()
   }
 }
 

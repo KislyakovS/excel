@@ -1,63 +1,43 @@
-import ExcelComponent from "@core/ExcelComponent";
+import {createToolBar} from "@/components/Toolbar/template";
+import $ from "@core/dom";
+import ExcelStateComponent from "@core/ExcelStateComponent";
+import {initStyleCell} from "@/constant";
+import * as actions from "@/redux/actions"
 
-export default class Toolbar extends ExcelComponent {
+export default class Toolbar extends ExcelStateComponent {
   constructor($root, options) {
     super($root, {
-      listeners: [],
+      listeners: ["click"],
       ...options
     });
 
+    this.state = {...initStyleCell}
     this.$root = $root;
   }
 
   static className = "excel__toolbar";
 
+  init() {
+    super.init();
+
+    this.$on("table-cell:style", (style) => {
+      this.setState(style)
+    })
+  }
+
   toHTML() {
-    return `
-    <ul class="style__list">
-    <li>
-      <button class="button">
-        <span class="material-icons">
-          format_align_left
-        </span>
-      </button>
-    </li>
-    <li>
-      <button class="button">
-        <span class="material-icons">
-          format_align_center
-        </span>
-      </button>
-    </li>
-    <li>
-      <button class="button">
-        <span class="material-icons">
-          format_align_right
-        </span>
-      </button>
-    </li>
-    <li>
-      <button class="button">
-        <span class="material-icons">
-          format_bold
-        </span>
-      </button>
-    </li>
-    <li>
-      <button class="button">
-        <span class="material-icons">
-          format_italic
-        </span>
-      </button>
-    </li>
-    <li>
-      <button class="button">
-        <span class="material-icons">
-          format_underlined
-        </span>
-      </button>
-    </li>
-  </ul>
-    `;
+    return createToolBar(this.state)
+  }
+
+  onClick(e) {
+    const $target = $(e.target)
+
+    if ($target.dataset.type === "button") {
+      const style = JSON.parse($target.dataset.style)
+
+      this.$emit("toolbar:style", style)
+      this.$dispatch(actions.addStyleCell({style: {...this.state, ...style}}))
+      this.setState(style)
+    }
   }
 }

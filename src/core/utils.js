@@ -7,3 +7,21 @@ export const range = (start, end) => {
 
   return new Array(end - start + 1).fill("").map((_, i) => i + start);
 };
+
+export const storage = (key, data = null) => {
+  if (data) {
+    localStorage.setItem(key, JSON.stringify(data))
+  } else {
+    return JSON.parse(localStorage.getItem(key))
+  }
+}
+
+export const setTitlePage = (title) => document.title = title
+
+export const isEqual = (a, b) => {
+  if (typeof a === "object" && typeof b === "object") {
+    return JSON.stringify(a) === JSON.stringify(b)
+  }
+
+  return a === b
+}

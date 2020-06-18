@@ -8,6 +8,8 @@
   padding-bottom: 2px;
 
   .row {
+    position: relative;
+
     display: flex;
     flex-direction: row;
     min-height: 20px;
@@ -15,12 +17,15 @@
   }
 
   .row__info {
-    position: relative;
+    position: sticky;
+    left: 0px;
+    z-index: 99;
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: $width-info-cell;
     height: 100%;
+    margin-right: 2px;
     border: 1px solid $main-color;
     background: #f8f9fa;
     border-top: none;

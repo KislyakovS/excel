@@ -1,0 +1,1 @@
+export const createTitleString = (title) => `${title === "" ? "Новая таблица" : title} - Excel`
