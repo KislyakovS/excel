@@ -32,7 +32,7 @@ export default class Formula extends ExcelComponent {
   }
 
   onInput(e) {
-    this.$dispatch(actions.inputCell({text: e.target.textContent}))
+    this.$dispatch(actions.inputCell({text: (e.target.textContent)}))
   }
 
   onKeydown(e) {

@@ -7,6 +7,7 @@ import * as actions from "@/redux/actions"
 import $ from "@core/dom";
 import {styleCell} from "@/constant";
 import {addStyleCell} from "@/redux/actions";
+import {parse} from "@core/utils";
 
 const KEYS = [
   "Enter",
@@ -40,7 +41,7 @@ export default class Table extends ExcelComponent {
   }
 
   changeSubscribe({currentText}) {
-    this.selection.current.text(currentText)
+    this.selection.current.text(parse(currentText))
   }
 
   init() {

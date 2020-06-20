@@ -25,3 +25,26 @@ export const isEqual = (a, b) => {
 
   return a === b
 }
+
+export const debounce = (fn, time) => {
+  let timeout
+  return (...arg) => {
+    timeout = setTimeout(() => {
+      clearTimeout(timeout)
+      fn(...arg)
+    }, time)
+  }
+}
+
+export const parse = (text) => {
+  if (text.startsWith("=")) {
+    try {
+      return eval(text.replace("=", ""))
+
+    } catch (e) {
+
+    }
+  } else {
+    return text
+  }
+}

@@ -58,7 +58,9 @@ export const onResize = ($root, e) => new Promise((resolve => {
       $resizer.style("bottom", "0");
     }
 
-    $rowInfo.style("z-index", "99")
+    if ($rowInfo.$el !== null) {
+      $rowInfo.style("z-index", "99")
+    }
 
     resolve({
       value: {[index]: valueResize},

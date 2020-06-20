@@ -1,37 +1,33 @@
+const getDataCell = (state, data, isText) => {
+  const {selected, dataCell} = state
+  const newDataCell = {...dataCell}
+
+  if (isText) {
+    const {text} = data
+    newDataCell[selected] = {...newDataCell[selected], text: text.trim()}
+  } else {
+    const {style} = data
+    newDataCell[selected] = {...newDataCell[selected], style}
+  }
+
+  return newDataCell
+}
+
 export const resizeTable = (state, data) => {
   const {type: typeResize, value} = data
+  const nameObj = `${typeResize}Size`
 
-  if (typeResize === "col") {
-    const newColSize = {...state.colSize, ...value}
-    return {...state, colSize: {...newColSize}}
-  } else if (typeResize === "row") {
-    const newRowSize = {...state.rowSize, ...value}
-    return {...state, rowSize: {...newRowSize}}
-  } else {
-    return state
-  }
+  return {...state, [nameObj]: {...state[nameObj], ...value}}
 }
 
 export const selectedTable = (state, data) => ({...state, selected: data.id})
 
 export const titleHeader = (state, data) => ({...state, title: data.title})
 
-export const inputCell = (state, data) => {
-  const {dataCell, selected} = state
-  const {text} = data
+export const inputCell = (state, data) => ({
+  ...state,
+  currentText: data.text.trim(),
+  dataCell: {...getDataCell(state, data, true)}
+})
 
-  const newDataCell = {...dataCell}
-  newDataCell[selected] = {...newDataCell[selected], text: text.trim()}
-
-  return {...state, currentText: text.trim(), dataCell: {...newDataCell}}
-}
-
-export const addStyleCell = (state, data) => {
-  const {selected, dataCell} = state
-  const {style} = data
-
-  const newDataCell = {...dataCell}
-  newDataCell[selected] = {...newDataCell[selected], style}
-
-  return {...state, dataCell: {...newDataCell}}
-}
+export const addStyleCell = (state, data) => ({...state, dataCell: {...getDataCell(state, data, false)}})
